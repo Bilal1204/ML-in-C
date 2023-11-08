@@ -3,6 +3,8 @@
 #include<math.h>
 #include<time.h>
 
+
+//* If we dont have enough neurons the cost of xor model will not go below 0.25
 //? 2 Layers, 1st Layer containing OR and NAND gate the output of which will be given to AND gate in 2nd layer
 
 typedef struct {
@@ -63,8 +65,12 @@ float forward(Xor m, float x, float y){
     return sigmoidf(m.and_w1*a + m.and_w2*b + m.and_b);
 }
 
-
-// sample *train = xor_train;
+//! In the above forward function we have two linear equations like:-
+//! a1 = x1*w1 + x2*w3 + b1
+//! a2 = x1*w2 + x2*w4 + b2
+//! by seeing the above two equations the intution of using matrices comes
+//! sigmoid ( [x1 x2] * [ w1  w2]  + [b1  b2] ) = [a1 a2]
+//!                    [ w3  w4]               
 
 
 float cost(Xor m){
@@ -233,5 +239,5 @@ int main(){
     return 0;
 }
 
-//! The main observation here is that the architecture I thought which would be sufficient to achieve the building of XOR gate consist of OR, AND, NAND Gate but after training the model when we traverse on the 3 Neurons, they might behave completely differently
+//! The main observation here is that the architecture I thought would be sufficient to achieve the building of XOR gate consist of OR, AND, NAND Gate but after training the model when we traverse the 3 Neurons, they might behave completely different
 //? So a Neuron could behave as any Gate other than our regular(OR, AND, NOR... etc) but when combined together they behave as XOR
